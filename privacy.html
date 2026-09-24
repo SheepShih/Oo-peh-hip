@@ -1,0 +1,229 @@
+<title>ホイシャッター プライバシー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..48,600;12..48,800&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --bg:#F4F4EF; --surface:#FFFFFF; --ink:#16160E; --muted:#6C6C61;
+    --faint:#E7E7DF; --hair:#DBDBD1; --accent:#96FF00; --accent-ink:#3F6B00;
+    --on-accent:#14140A;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B0B08; --surface:#141410; --ink:#F1F1E8; --muted:#9A9A8D;
+      --faint:#23231C; --hair:#2C2C23; --accent:#96FF00; --accent-ink:#B9FF52;
+      --on-accent:#0D1400;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B0B08; --surface:#141410; --ink:#F1F1E8; --muted:#9A9A8D;
+    --faint:#23231C; --hair:#2C2C23; --accent:#96FF00; --accent-ink:#B9FF52;
+    --on-accent:#0D1400;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","PingFang TC","Segoe UI",sans-serif;
+    line-height:1.72; font-size:16.5px;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    padding-inline:20px; padding-block:0;
+  }
+  .wrap{max-width:660px; margin:0 auto}
+
+  /* pure-CSS language switch */
+  .lang-radio{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none}
+
+  header{padding-block:64px 0}
+  .eyebrow{
+    font-family:"Space Mono",ui-monospace,monospace; font-size:12.5px; font-weight:700;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--accent-ink); margin:0 0 18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:26px; height:9px; border-radius:5px; background:var(--accent); display:inline-block}
+  h1{
+    font-family:"Bricolage Grotesque","Hiragino Sans",sans-serif; font-weight:800;
+    font-size:clamp(38px,8vw,60px); line-height:1.02; letter-spacing:-.02em;
+    margin:0; text-wrap:balance;
+  }
+  h1 .en{display:block; font-size:.42em; font-weight:600; letter-spacing:.01em; color:var(--muted); margin-top:14px;
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","PingFang TC","Segoe UI",sans-serif}
+  .meta{
+    font-family:"Space Mono",ui-monospace,monospace; font-size:12.5px; color:var(--muted);
+    margin-top:26px; padding-top:22px; border-top:1px solid var(--hair);
+    display:flex; flex-wrap:wrap; gap:6px 22px;
+  }
+  .meta b{color:var(--ink); font-weight:700}
+
+  nav{display:flex; gap:8px; margin:34px 0 8px; flex-wrap:wrap}
+  nav label{
+    font-family:"Space Mono",ui-monospace,monospace; font-size:13px; font-weight:700;
+    letter-spacing:.04em; color:var(--muted); background:transparent;
+    border:1px solid var(--hair); border-radius:999px; padding:8px 18px; cursor:pointer;
+    transition:.18s ease; user-select:none;
+  }
+  nav label:hover{color:var(--ink); border-color:var(--muted)}
+
+  main{padding-block:22px 0}
+  .lede{font-size:19px; line-height:1.62; color:var(--ink); margin:8px 0 40px; text-wrap:pretty}
+  .lede .hl{background:linear-gradient(transparent 62%, color-mix(in srgb, var(--accent) 55%, transparent) 62%); padding:0 .06em}
+
+  section.doc{display:none}
+
+  /* selected language: show its section + highlight its tab */
+  #lang-ja:checked ~ main .doc[data-lang="ja"],
+  #lang-en:checked ~ main .doc[data-lang="en"],
+  #lang-zh:checked ~ main .doc[data-lang="zh"]{display:block; animation:fade .4s ease both}
+  #lang-ja:checked ~ nav label[for="lang-ja"],
+  #lang-en:checked ~ nav label[for="lang-en"],
+  #lang-zh:checked ~ nav label[for="lang-zh"]{
+    color:var(--on-accent); background:var(--accent); border-color:var(--accent);
+  }
+  .lang-radio:focus-visible ~ nav label{outline:2px solid var(--accent-ink); outline-offset:3px}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+
+  .clause{
+    display:grid; grid-template-columns:34px 1fr; gap:0 18px;
+    padding:26px 0; border-top:1px solid var(--hair);
+  }
+  .clause:first-of-type{border-top:none}
+  .num{font-family:"Space Mono",ui-monospace,monospace; font-size:13px; font-weight:700; color:var(--accent-ink); padding-top:3px}
+  .clause h2{font-family:"Bricolage Grotesque",sans-serif; font-weight:700; font-size:20px; letter-spacing:-.01em; margin:0 0 8px; line-height:1.25}
+  .clause p{margin:0 0 10px; color:var(--muted)}
+  .clause p:last-child{margin-bottom:0}
+  .clause strong{color:var(--ink); font-weight:600}
+  ul.mini{margin:6px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px}
+  ul.mini li{position:relative; padding-left:20px; color:var(--muted)}
+  ul.mini li::before{content:""; position:absolute; left:2px; top:11px; width:6px; height:6px; border-radius:2px; background:var(--accent)}
+  a.mail{color:var(--accent-ink); text-decoration:none; font-weight:600; border-bottom:1.5px solid color-mix(in srgb,var(--accent) 50%, transparent)}
+  a.mail:hover{border-bottom-color:var(--accent)}
+
+  footer{
+    margin-top:8px; padding:30px 0 60px; border-top:1px solid var(--hair);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","PingFang TC","Segoe UI",sans-serif;
+    font-size:12.5px; color:var(--muted);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+  @media (max-width:460px){
+    header{padding-block:44px 0}
+    .clause{grid-template-columns:1fr; gap:8px}
+    .num{padding-top:0}
+  }
+</style>
+
+<div class="wrap">
+  <input class="lang-radio" type="radio" name="lang" id="lang-ja" checked>
+  <input class="lang-radio" type="radio" name="lang" id="lang-en">
+  <input class="lang-radio" type="radio" name="lang" id="lang-zh">
+
+  <header>
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>ホイシャッター<span class="en">黑白拍 · Oo-pe̍h hip</span></h1>
+    <div class="meta">
+      <span>最終更新 <b>2026-09-17</b></span>
+      <span>連絡先 <b>stf0830@icloud.com</b></span>
+      <span><b>データ収集ゼロ</b></span>
+    </div>
+  </header>
+
+  <nav aria-label="言語 / Language">
+    <label for="lang-ja">日本語</label>
+    <label for="lang-en">English</label>
+    <label for="lang-zh">繁體中文</label>
+  </nav>
+
+  <main>
+    <!-- Japanese -->
+    <section class="doc" data-lang="ja">
+      <p class="lede">「ホイシャッター」は、写真や個人情報を<span class="hl">一切収集・送信しません</span>。すべての処理はお使いの端末の中だけで完結します。</p>
+      <div class="clause"><div class="num">01</div><div>
+        <h2>収集する情報</h2>
+        <p>本アプリは、氏名・メールアドレス・位置情報・利用状況などの<strong>個人情報を収集、保存、外部送信しません</strong>。アカウント登録も不要です。</p>
+      </div></div>
+      <div class="clause"><div class="num">02</div><div>
+        <h2>カメラと写真へのアクセス</h2>
+        <ul class="mini">
+          <li><strong>カメラ</strong>：スマホを振ったときに写真を撮影するために使用します。</li>
+          <li><strong>写真ライブラリ</strong>：撮影した写真を端末に保存し、専用アルバムに整理するために使用します。</li>
+        </ul>
+        <p>撮影・保存された写真は<strong>あなたの端末内にのみ</strong>保存されます。開発者や第三者がこれらを閲覧・取得することはありません。</p>
+      </div></div>
+      <div class="clause"><div class="num">03</div><div>
+        <h2>トラッキングと第三者提供</h2>
+        <p>本アプリは、解析ツール・広告・トラッキング・第三者SDKを<strong>一切使用しません</strong>。あなたのデータが第三者に共有・販売されることはありません。</p>
+      </div></div>
+      <div class="clause"><div class="num">04</div><div>
+        <h2>お子様のプライバシー</h2>
+        <p>本アプリはデータを収集しないため、あらゆる年齢の方に安全にご利用いただけます。</p>
+      </div></div>
+      <div class="clause"><div class="num">05</div><div>
+        <h2>お問い合わせ</h2>
+        <p>本ポリシーに関するご質問は <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a> までご連絡ください。</p>
+      </div></div>
+    </section>
+
+    <!-- English -->
+    <section class="doc" data-lang="en">
+      <p class="lede">Oo-pe̍h hip <span class="hl">collects and transmits nothing</span> — no photos, no personal data. Everything happens entirely on your device.</p>
+      <div class="clause"><div class="num">01</div><div>
+        <h2>Information We Collect</h2>
+        <p>The app does <strong>not collect, store, or transmit</strong> any personal information — no name, email, location, or usage data. No account is required.</p>
+      </div></div>
+      <div class="clause"><div class="num">02</div><div>
+        <h2>Camera &amp; Photos Access</h2>
+        <ul class="mini">
+          <li><strong>Camera</strong> — used to capture photos when you swing your phone.</li>
+          <li><strong>Photo Library</strong> — used to save your photos to the device and organize them into a dedicated album.</li>
+        </ul>
+        <p>Captured photos are stored <strong>only on your device</strong>. Neither the developer nor any third party can view or access them.</p>
+      </div></div>
+      <div class="clause"><div class="num">03</div><div>
+        <h2>Tracking &amp; Third Parties</h2>
+        <p>The app uses <strong>no analytics, no ads, no tracking, and no third-party SDKs</strong>. Your data is never shared with or sold to anyone.</p>
+      </div></div>
+      <div class="clause"><div class="num">04</div><div>
+        <h2>Children's Privacy</h2>
+        <p>Because the app collects no data, it is safe to use for people of all ages.</p>
+      </div></div>
+      <div class="clause"><div class="num">05</div><div>
+        <h2>Contact</h2>
+        <p>Questions about this policy? Reach us at <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a>.</p>
+      </div></div>
+    </section>
+
+    <!-- Traditional Chinese -->
+    <section class="doc" data-lang="zh">
+      <p class="lede">「黑白拍」<span class="hl">不收集、不上傳任何資料</span>——沒有照片，也沒有個人資訊。所有處理都只在你的裝置上完成。</p>
+      <div class="clause"><div class="num">01</div><div>
+        <h2>我們收集的資訊</h2>
+        <p>本 App <strong>不會收集、儲存或傳送</strong>任何個人資訊——包括姓名、電子郵件、位置與使用紀錄。也不需要註冊帳號。</p>
+      </div></div>
+      <div class="clause"><div class="num">02</div><div>
+        <h2>相機與照片權限</h2>
+        <ul class="mini">
+          <li><strong>相機</strong>：用於在你甩動手機時拍攝照片。</li>
+          <li><strong>照片圖庫</strong>：用於將照片儲存至裝置，並整理進專屬相簿。</li>
+        </ul>
+        <p>拍攝的照片<strong>僅儲存在你的裝置上</strong>。開發者與任何第三方都無法檢視或取得。</p>
+      </div></div>
+      <div class="clause"><div class="num">03</div><div>
+        <h2>追蹤與第三方</h2>
+        <p>本 App <strong>不使用任何分析工具、廣告、追蹤或第三方 SDK</strong>。你的資料絕不會被分享或販售給任何人。</p>
+      </div></div>
+      <div class="clause"><div class="num">04</div><div>
+        <h2>兒童隱私</h2>
+        <p>由於本 App 不收集任何資料，適合各年齡層安心使用。</p>
+      </div></div>
+      <div class="clause"><div class="num">05</div><div>
+        <h2>聯絡我們</h2>
+        <p>對本政策有任何疑問，請來信 <a class="mail" href="mailto:stf0830@icloud.com">stf0830@icloud.com</a>。</p>
+      </div></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>ホイシャッター · 黑白拍 · Oo-pe̍h hip</span>
+    <span>© 2026</span>
+  </footer>
+</div>
